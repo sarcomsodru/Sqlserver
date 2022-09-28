@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  mssql:
+    container_name: sql-server
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    #image: mcr.microsoft.com/mssql/server:2017-CU11-ubuntu
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      ###La contraseña se puede generear en otro archivo pero tambien se puede cambiar###
+      SA_PASSWORD: "Contraseña12345678"
+    ports:
+      ###Se deja el puerto 1433 para poder comunicarse####
+      - 1433:1433
+    volumes:
+      - my-volume:/var/opt/mssql
+####Servcio de samba####
+#  samba:
+#    image: dperson/samba
+#    environment:
+#      TZ: 'America/Asuncion'
+#    networks:
+#      - default
+#    ports:
+#      - "137:137/udp"
+#      - "138:138/udp"
+#      - "139:139/tcp"
+#      - "445:445/tcp"
+#    read_only: true
+#    tmpfs:
+#      - /tmp
+#    restart: unless-stopped
+#    stdin_open: true
+#    tty: true
+#    volumes:
+#      - /mnt:/mnt:z
+#      - /mnt2:/mnt2:z
+#    command: '-s "Mount;/mnt" -s "Bobs Volume;/mnt2;yes;no;no;bob" -u "bob;bobspasswd" -p'
+#networks:
+#  default:
+volumes:
+  my-volume:{}
+
